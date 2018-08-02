@@ -70,6 +70,7 @@ use std::io::Read;
 use std::path::{Path, PathBuf};
 
 use rand::Rng;
+use rand::RngCore;
 
 use net::{ErrCode, NetResult};
 

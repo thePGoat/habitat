@@ -175,6 +175,7 @@ struct HealthCheckBody {
     stderr: String,
 }
 
+// Begin route handlers
 fn butterfly(req: &mut Request) -> IronResult<Response> {
     let state = req.get::<persistent::Read<ManagerFs>>().unwrap();
     match File::open(&state.butterfly_data_path) {
@@ -289,6 +290,7 @@ fn doc(_req: &mut Request) -> IronResult<Response> {
         APIDOCS,
     )))
 }
+// End route handlers
 
 impl Into<Response> for HealthCheck {
     fn into(self) -> Response {

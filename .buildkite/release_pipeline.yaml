@@ -25,7 +25,7 @@ steps:
   - label: ":windows: :habicat: core/hab"
     command: /bin/true
     agents:
-      queue: buildkite-default-windows
+      queue: default-windows
 
   - label: ":mac: :habicat: core/hab"
     command: .buildkite/scripts/build_mac_release.sh
@@ -55,7 +55,7 @@ steps:
   - label: ":windows: :habicat: :hammer_and_wrench: core/hab-plan-build-ps1"
     command: /bin/true
     agents:
-      queue: buildkite-default-windows
+      queue: default-windows
 
   # This must pull in the core/hab we built ^^^
   - label: ":linux: :habicat: core/hab-bintray-publish"
@@ -67,7 +67,7 @@ steps:
   - label: ":windows: :habicat: core/hab-bintray-publish"
     command: /bin/true
     agents:
-      queue: buildkite-default-windows
+      queue: default-windows
 
   - wait
 
@@ -90,7 +90,7 @@ steps:
   - label: ":windows: :habicat: core/hab-studio"
     command: /bin/true
     agents:
-      queue: buildkite-default-windows
+      queue: default-windows
 
   - wait
 
@@ -103,7 +103,7 @@ steps:
   - label: ":windows: :habicat: core/hab-sup"
     command: /bin/true
     agents:
-      queue: buildkite-default-windows
+      queue: default-windows
 
   - wait
 
@@ -125,7 +125,7 @@ steps:
   - label: ":windows: :docker: core/hab-pkg-export-docker"
     command: /bin/true
     agents:
-      queue: buildkite-default-windows
+      queue: default-windows
 
   - label: ":k8s: core/hab-pkg-export-kubernetes"
     command: .buildkite/scripts/build_component.sh pkg-export-kubernetes
@@ -148,7 +148,7 @@ steps:
   - label: ":windows: :package: core/hab-pkg-export-tar"
     command: /bin/true
     agents:
-      queue: buildkite-default-windows
+      queue: default-windows
 
   # TODO: Create a Mesos emoji
   - label: ":habicat: core/hab-pkg-mesosize"
@@ -184,7 +184,7 @@ steps:
   - label: ":windows: Upload (but don't publish!) artifacts to Bintray"
     command: /bin/true
     agents:
-      queue: buildkite-default-windows
+      queue: default-windows
 
   - label: ":mac: Upload (but don't publish!) artifacts to Bintray"
     command: .buildkite/scripts/bintray_upload_macos.sh

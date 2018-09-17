@@ -24,7 +24,6 @@ steps:
 
   - label: ":windows: :habicat: core/hab"
     command: /bin/true
-    skip: "No Windows builders yet"
     agents:
       queue: habitat-release
 
@@ -55,7 +54,6 @@ steps:
 
   - label: ":windows: :habicat: :hammer_and_wrench: core/hab-plan-build-ps1"
     command: /bin/true
-    skip: "Testing Windows builds"
     agents:
       queue: habitat-release
 
@@ -68,7 +66,6 @@ steps:
 
   - label: ":windows: :habicat: core/hab-bintray-publish"
     command: /bin/true
-    skip: "No Windows builders yet"
     agents:
       queue: habitat-release
 
@@ -92,7 +89,6 @@ steps:
 
   - label: ":windows: :habicat: core/hab-studio"
     command: /bin/true
-    skip: "No Windows builders yet"
     agents:
       queue: habitat-release
 
@@ -106,7 +102,6 @@ steps:
 
   - label: ":windows: :habicat: core/hab-sup"
     command: /bin/true
-    skip: "No Windows builders yet"
     agents:
       queue: habitat-release
 
@@ -129,7 +124,6 @@ steps:
 
   - label: ":windows: :docker: core/hab-pkg-export-docker"
     command: /bin/true
-    skip: "No Windows builders yet"
     agents:
       queue: habitat-release
 
@@ -153,7 +147,6 @@ steps:
 
   - label: ":windows: :package: core/hab-pkg-export-tar"
     command: /bin/true
-    skip: "No Windows builders yet"
     agents:
       queue: habitat-release
 
@@ -190,7 +183,6 @@ steps:
 
   - label: ":windows: Upload (but don't publish!) artifacts to Bintray"
     command: /bin/true
-    skip: "No Windows builders yet"
     agents:
       queue: habitat-release
 

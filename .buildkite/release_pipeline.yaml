@@ -23,7 +23,7 @@ steps:
       queue: habitat-release
 
   - label: ":windows: :habicat: core/hab"
-    command: cargo --version
+    command: .buildkite/scripts/build_windows_release.ps1
     agents:
       queue: default-windows
 

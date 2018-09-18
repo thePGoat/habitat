@@ -27,7 +27,7 @@ steps:
     agents:
       queue: default-windows
     plugins:
-      https://github.com/chef/docker-buildkite-plugin#snappj/add-windows-support:
+      https://github.com/chef/docker-buildkite-plugin#snappj/add-support-for-windows-images:
         always-pull: true
         image: "microsoft/windowsservercore"
         windows-image: true

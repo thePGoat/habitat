@@ -26,6 +26,12 @@ steps:
     command: .buildkite/scripts/build_windows_release.ps1
     agents:
       queue: default-windows
+    plugins:
+      https://github.com/chef/docker-buildkite-plugin#snappj/add-windows-support:
+        always-pull: true
+        image: "microsoft/windowsservercore"
+        windows-image: true
+
 
   - label: ":mac: :habicat: core/hab"
     command: .buildkite/scripts/build_mac_release.sh

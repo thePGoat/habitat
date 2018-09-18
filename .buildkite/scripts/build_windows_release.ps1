@@ -5,7 +5,10 @@ Set-PSDebug -Trace 1
 
 ###################
 # Functions
-function BuildPathString([string]$StartingPath, [string]$Path) {
+
+# This creates a new path string from the Environment variable
+# This is not the same as doing a path.combine
+function New-PathString([string]$StartingPath, [string]$Path) {
     if (-not [string]::IsNullOrEmpty($path)) {
         if (-not [string]::IsNullOrEmpty($StartingPath)) {
             [string[]]$PathCollection = "$path;$StartingPath" -split ';'
@@ -21,7 +24,6 @@ function BuildPathString([string]$StartingPath, [string]$Path) {
         $StartingPath
     }
 }
-
 
 ###################
 # 'main'
@@ -55,18 +57,18 @@ choco install 7zip --version '16.02.0.20160811' --confirm
 Write-Host "--- Installing rustup and stable-x86_64-pc-windows-msvc Rust."
 invoke-restmethod -usebasicparsing 'https://static.rust-lang.org/rustup/dist/i686-pc-windows-gnu/rustup-init.exe' -outfile 'rustup-init.exe'
 ./rustup-init.exe -y --no-modify-path
-$env:PATH                   = BuildPathString -StartingPath $env:PATH    -Path "$env:USERPROFILE\.cargo\bin"
+$env:PATH                   = New-PathString -StartingPath $env:PATH    -Path "$env:USERPROFILE\.cargo\bin"
 rustup install stable-x86_64-pc-windows-msvc
 
 # Install protobuf helper stuff
 choco install protoc -y
 invoke-expression "cargo install protobuf"
 
-$env:PATH                   = BuildPathString -StartingPath $env:PATH    -Path 'C:\Program Files\7-Zip'
-$env:PATH                   = BuildPathString -StartingPath $env:PATH    -Path $ChocolateyHabitatBinDir
+$env:PATH                   = New-PathString -StartingPath $env:PATH    -Path 'C:\Program Files\7-Zip'
+$env:PATH                   = New-PathString -StartingPath $env:PATH    -Path $ChocolateyHabitatBinDir
 #$env:PATH                   = New-PathString -StartingPath $env:PATH    -Path Env:
-$env:LIB                    = BuildPathString -StartingPath $env:LIB     -Path $ChocolateyHabitatLibDir
-$env:INCLUDE                = BuildPathString -StartingPath $env:INCLUDE -Path $ChocolateyHabitatIncludeDir
+$env:LIB                    = New-PathString -StartingPath $env:LIB     -Path $ChocolateyHabitatLibDir
+$env:INCLUDE                = New-PathString -StartingPath $env:INCLUDE -Path $ChocolateyHabitatIncludeDir
 $env:SODIUM_LIB_DIR         = $ChocolateyHabitatLibDir
 $env:LIBARCHIVE_INCLUDE_DIR = $ChocolateyHabitatIncludeDir
 $env:LIBARCHIVE_LIB_DIR     = $ChocolateyHabitatLibDir
@@ -90,10 +92,10 @@ $env:PROTOBUF_PREFIX=$env:ChocolateyInstall
 
 # test build
 Write-Host "--- Running build"
-$Path = Resolve-Path $Path
+#$Path = Resolve-Path $Path
 $cargo = "cargo"
-Push-Location "$Path"
+#Push-Location "$Path"
 Invoke-Expression "$cargo build" -ErrorAction Stop
-Pop-Location
+#Pop-Location
 
 exit $LASTEXITCODE

@@ -1,6 +1,7 @@
 #!/usr/bin/env powershell
 
 #Requires -Version 5
+Set-PSDebug
 
 # Environment variables
 $env:ChocolateyInstall = "$env:ProgramData\Chocolatey"
@@ -9,7 +10,7 @@ $ChocolateyHabitatIncludeDir = "$env:ChocolateyInstall\lib\habitat_native_depend
 $ChocolateyHabitatBinDir = "C:\ProgramData\chocolatey\lib\habitat_native_dependencies\builds\bin"
 
 # Install Chocolatey
-Write-Host "Installing Chocolatey"
+Write-Host "--- Installing Chocolatey"
 Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1')) | out-null
 
 # Install hab native dependencies
@@ -35,7 +36,7 @@ Copy-Item $env:ChocolateyInstall\lib\libsodium_vc120\build\native\bin\libsodium-
 choco install 7zip --version '16.02.0.20160811' --confirm
 
 # Install some rust
-Write-Host "Installing rustup and stable-x86_64-pc-windows-msvc Rust."
+Write-Host "--- Installing rustup and stable-x86_64-pc-windows-msvc Rust."
 invoke-restmethod -usebasicparsing 'https://static.rust-lang.org/rustup/dist/i686-pc-windows-gnu/rustup-init.exe' -outfile 'rustup-init.exe'
 ./rustup-init.exe -y --default-toolchain stable-x86_64-pc-windows-msvc --no-modify-path
 
@@ -55,7 +56,7 @@ $env:OPENSSL_LIB_DIR        = $ChocolateyHabitatLibDir
 $env:OPENSSL_INCLUDE_DIR    = $ChocolateyHabitatIncludeDir
 $env:LIBZMQ_PREFIX          = Split-Path $ChocolateyHabitatLibDir -Parent
 
-Write-Host "Downloading cacerts.pem"
+Write-Host "--- Downloading cacerts.pem"
 $current_protocols = [Net.ServicePointManager]::SecurityProtocol
 try {
     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
@@ -69,6 +70,7 @@ $env:SSL_CERT_FILE="$env:TEMP\cacert.pem"
 $env:PROTOBUF_PREFIX=$env:ChocolateyInstall
 
 # test build
+Write-Host "--- Running build"
 $Path = Resolve-Path $Path
 $cargo = "cargo"
 Push-Location "$Path"

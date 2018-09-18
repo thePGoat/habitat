@@ -42,6 +42,5 @@ invoke-restmethod -usebasicparsing 'https://static.rust-lang.org/rustup/dist/i68
 
 # Install protobuf helper stuff
 choco install protoc -y
-$cargo = Get-CargoCommand
-invoke-expression "$cargo install protobuf"
+invoke-expression "cargo install protobuf"
 

@@ -96,7 +96,6 @@ $env:PROTOBUF_PREFIX=$env:ChocolateyInstall
 
 # We need to create a new directory since rust has issues with docker mounted filesystems
 New-Item -ItemType directory -Path C:\build
-env
 Copy-Item -Path C:\workdir -Destination C:\build -Recurse
 cd C:\build
 

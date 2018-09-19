@@ -33,6 +33,9 @@ $ChocolateyHabitatIncludeDir = "$env:ChocolateyInstall\lib\habitat_native_depend
 $ChocolateyHabitatBinDir = "C:\ProgramData\chocolatey\lib\habitat_native_dependencies\builds\bin"
 $Path="."
 
+Write-Host "--- Add git to the path"
+$env:path = New-PathString -StartingPath $env:path -Path "c:\Program Files\git\cmd"
+
 Write-Host "--- Installing Chocolatey"
 Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1')) | out-null
 
@@ -100,7 +103,6 @@ Copy-Item -Path C:\workdir\* -Destination C:\build -Recurse
 Write-Host "--- Running build"
 cd C:\build
 $cargo = "cargo"
-$env:RUST_LOG="debug"
 Invoke-Expression "$cargo build" -ErrorAction Stop
 
 exit $LASTEXITCODE

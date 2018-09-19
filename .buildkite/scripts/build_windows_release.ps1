@@ -25,6 +25,10 @@ function New-PathString([string]$StartingPath, [string]$Path) {
     }
 }
 
+pwd
+
+exit -1
+
 ###################
 # 'main'
 $env:ChocolateyInstall = "$env:ProgramData\Chocolatey"
@@ -51,7 +55,7 @@ Copy-Item $env:ChocolateyInstall\lib\libsodium_vc120\build\native\bin\libsodium-
 Copy-Item $env:ChocolateyInstall\lib\libsodium_vc120\build\native\bin\libsodium-x64-v120-mt-1_0_12_0.dll $ChocolateyHabitatBinDir\libsodium.dll -Force
 
 # We need the Visual C++ tools to build Rust crates (provides a compiler and linker)
-choco install 'vcbuildtools' --confirm --allowemptychecksum
+choco install 'visualcppbuildtools' --version '14.0.25123' --confirm --allowemptychecksum
 
 
 # 7zip!

@@ -50,6 +50,10 @@ choco install libsodium_vc120 --version 1.0.12 --confirm -s https://www.nuget.or
 Copy-Item $env:ChocolateyInstall\lib\libsodium_vc120\build\native\bin\libsodium-x64-v120-mt-1_0_12_0.imp.lib $ChocolateyHabitatLibDir\sodium.lib -Force
 Copy-Item $env:ChocolateyInstall\lib\libsodium_vc120\build\native\bin\libsodium-x64-v120-mt-1_0_12_0.dll $ChocolateyHabitatBinDir\libsodium.dll -Force
 
+# We need the Visual C++ tools to build Rust crates (provides a compiler and linker)
+choco install 'visualcppbuildtools' --version '14.0.25123' --confirm --allowemptychecksum
+
+
 # 7zip!
 choco install 7zip --version '16.02.0.20160811' --confirm
 
@@ -92,10 +96,7 @@ $env:PROTOBUF_PREFIX=$env:ChocolateyInstall
 
 # test build
 Write-Host "--- Running build"
-#$Path = Resolve-Path $Path
 $cargo = "cargo"
-#Push-Location "$Path"
 Invoke-Expression "$cargo build" -ErrorAction Stop
-#Pop-Location
 
 exit $LASTEXITCODE

@@ -33,28 +33,27 @@ $ChocolateyHabitatIncludeDir = "$env:ChocolateyInstall\lib\habitat_native_depend
 $ChocolateyHabitatBinDir = "C:\ProgramData\chocolatey\lib\habitat_native_dependencies\builds\bin"
 $Path="."
 
-# Install Chocolatey
 Write-Host "--- Installing Chocolatey"
 Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1')) | out-null
 
-# Install hab native dependencies
+Write-Host "--- Installing Native Dependencies"
 choco install habitat_native_dependencies --confirm -s https://www.myget.org/F/habitat/api/v2  --allowemptychecksums
 
-# Install libzmq
+Write-Host "--- Installing libzmq"
 choco install libzmq_vc120 --version 4.2.3 --confirm -s https://www.nuget.org/api/v2/ --allowemptychecksums
 Copy-Item $env:ChocolateyInstall\lib\libzmq_vc120\build\native\bin\libzmq-x64-v120-mt-4_2_3_0.imp.lib $ChocolateyHabitatLibDir\zmq.lib -Force
 Copy-Item $env:ChocolateyInstall\lib\libzmq_vc120\build\native\bin\libzmq-x64-v120-mt-4_2_3_0.dll $ChocolateyHabitatBinDir\libzmq.dll -Force
 
-# Install libsodium
+Write-Host "--- Installing libsodium"
 choco install libsodium_vc120 --version 1.0.12 --confirm -s https://www.nuget.org/api/v2/
 Copy-Item $env:ChocolateyInstall\lib\libsodium_vc120\build\native\bin\libsodium-x64-v120-mt-1_0_12_0.imp.lib $ChocolateyHabitatLibDir\sodium.lib -Force
 Copy-Item $env:ChocolateyInstall\lib\libsodium_vc120\build\native\bin\libsodium-x64-v120-mt-1_0_12_0.dll $ChocolateyHabitatBinDir\libsodium.dll -Force
 
 # We need the Visual C++ tools to build Rust crates (provides a compiler and linker)
+Write-Host "--- Installing Visual C++ Tools"
 choco install 'visualcppbuildtools' --version '14.0.25123' --confirm --allowemptychecksum
 
-
-# 7zip!
+Write-Host "--- Installing 7zip"
 choco install 7zip --version '16.02.0.20160811' --confirm
 
 # Install some rust
@@ -64,7 +63,7 @@ invoke-restmethod -usebasicparsing 'https://static.rust-lang.org/rustup/dist/i68
 $env:PATH                   = New-PathString -StartingPath $env:PATH    -Path "$env:USERPROFILE\.cargo\bin"
 rustup install stable-x86_64-pc-windows-msvc
 
-# Install protobuf helper stuff
+Write-Host "--- Installing protoc and protobuf"
 choco install protoc -y
 invoke-expression "cargo install protobuf"
 
@@ -95,6 +94,7 @@ $env:SSL_CERT_FILE="$env:TEMP\cacert.pem"
 $env:PROTOBUF_PREFIX=$env:ChocolateyInstall
 
 # We need to create a new directory since rust has issues with docker mounted filesystems
+Write-Host "--- Moving build folder to new location"
 New-Item -ItemType directory -Path C:\build
 Copy-Item -Path C:\workdir -Destination C:\build -Recurse
 cd C:\build

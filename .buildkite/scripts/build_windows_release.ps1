@@ -99,6 +99,10 @@ New-Item -ItemType directory -Path C:\build
 Copy-Item -Path C:\workdir -Destination C:\build -Recurse
 cd C:\build
 
+dir C:\build
+
+dir C:\workdir
+
 # test build
 Write-Host "--- Running build"
 $cargo = "cargo"

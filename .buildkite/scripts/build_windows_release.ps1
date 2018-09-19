@@ -1,7 +1,7 @@
 #!/usr/bin/env powershell
 
 #Requires -Version 5
-Set-PSDebug -Trace 1
+Set-PSDebug -Off
 
 ###################
 # Functions
@@ -96,8 +96,8 @@ $env:PROTOBUF_PREFIX=$env:ChocolateyInstall
 
 # We need to create a new directory since rust has issues with docker mounted filesystems
 New-Item -ItemType directory -Path C:\build
-echo $env:BUILDKITE_BUILD_CHECKOUT_PATH
-Copy-Item $env:BUILDKITE_BUILD_CHECKOUT_PATH -Destination C:\build -Recurse
+env
+Copy-Item -Path C:\workdir -Destination C:\build -Recurse
 cd C:\build
 
 # test build

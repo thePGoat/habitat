@@ -97,15 +97,10 @@ $env:PROTOBUF_PREFIX=$env:ChocolateyInstall
 Write-Host "--- Moving build folder to new location"
 New-Item -ItemType directory -Path C:\build
 Copy-Item -Path C:\workdir\* -Destination C:\build -Recurse
-cd C:\build
 
-dir C:\build
-
-dir C:\workdir
-
-# test build
 Write-Host "--- Running build"
+cd C:\build
 $cargo = "cargo"
-Invoke-Expression "$cargo build" -ErrorAction Stop
+Invoke-Expression "RUST_DEBUG=1 $cargo build" -ErrorAction Stop
 
 exit $LASTEXITCODE

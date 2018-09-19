@@ -100,7 +100,7 @@ Copy-Item -Path C:\workdir\* -Destination C:\build -Recurse
 Write-Host "--- Running build"
 cd C:\build
 $cargo = "cargo"
-$env:RUST_LOG=debug
+$env:RUST_LOG="debug"
 Invoke-Expression "$cargo build" -ErrorAction Stop
 
 exit $LASTEXITCODE

@@ -25,10 +25,6 @@ function New-PathString([string]$StartingPath, [string]$Path) {
     }
 }
 
-pwd
-
-exit -1
-
 ###################
 # 'main'
 $env:ChocolateyInstall = "$env:ProgramData\Chocolatey"
@@ -97,6 +93,12 @@ finally {
 
 $env:SSL_CERT_FILE="$env:TEMP\cacert.pem"
 $env:PROTOBUF_PREFIX=$env:ChocolateyInstall
+
+# We need to create a new directory since rust has issues with docker mounted filesystems
+New-Item -ItemType directory -Path C:\build
+echo $env:BUILDKITE_BUILD_CHECKOUT_PATH
+Copy-Item $env:BUILDKITE_BUILD_CHECKOUT_PATH -Destination C:\build -Recurse
+cd C:\build
 
 # test build
 Write-Host "--- Running build"

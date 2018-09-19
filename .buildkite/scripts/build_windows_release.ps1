@@ -69,7 +69,6 @@ invoke-expression "cargo install protobuf"
 
 $env:PATH                   = New-PathString -StartingPath $env:PATH    -Path 'C:\Program Files\7-Zip'
 $env:PATH                   = New-PathString -StartingPath $env:PATH    -Path $ChocolateyHabitatBinDir
-#$env:PATH                   = New-PathString -StartingPath $env:PATH    -Path Env:
 $env:LIB                    = New-PathString -StartingPath $env:LIB     -Path $ChocolateyHabitatLibDir
 $env:INCLUDE                = New-PathString -StartingPath $env:INCLUDE -Path $ChocolateyHabitatIncludeDir
 $env:SODIUM_LIB_DIR         = $ChocolateyHabitatLibDir
@@ -101,6 +100,6 @@ Copy-Item -Path C:\workdir\* -Destination C:\build -Recurse
 Write-Host "--- Running build"
 cd C:\build
 $cargo = "cargo"
-Invoke-Expression "RUST_DEBUG=1 $cargo build" -ErrorAction Stop
+Invoke-Expression "RUST_LOG=debug $cargo build" -ErrorAction Stop
 
 exit $LASTEXITCODE

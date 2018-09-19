@@ -1,7 +1,7 @@
 #!/usr/bin/env powershell
 
 #Requires -Version 5
-Set-PSDebug -Off
+Set-PSDebug -Trace 1
 
 ###################
 # Functions
